@@ -3,6 +3,12 @@
 <mapper namespace="com.app.threetier.mapper.ProductMapper">
     <insert id="insert" parameterType="ProductVO">
         INSERT INTO TBL_PRODUCT
-        VALUES (SEQ_POST.NEXTVAL, #{productName}, #{productPrice}, #{productStock}, #{productBrand})
+        VALUES (SEQ_PRODUCT.NEXTVAL, #{productName}, #{productPrice}, #{productStock}, #{productBrand})
     </insert>
+
+    <select id="selectAll" resultType="ProductVO">
+        SELECT ID, PRODUCT_NAME, PRODUCT_PRICE, PRODUCT_STOCK, PRODDUCT_BRAND
+        FROM TBL_PRODUCT
+    </select>
+
 </mapper>

@@ -12,19 +12,7 @@
         <div><input th:field="*{memberEmail}" placeholder="이메일" /></div>
         <div><input th:field="*{memberPassword}" placeholder="비밀번호" /></div>
         <div><input th:field="*{memberName}" placeholder="이름" /></div>
-        <button type="button">완료</button>
+        <button>회원 가입</button>
     </form>
 </body>
-<script>
-    const inputs = document.querySelectorAll("input")
-    const submitButton = document.querySelector("button")
-    const form = document.querySelector("form")
-
-    submitButton.addEventListener("click", () => {
-        for(let input of inputs) {
-            if(!input.value) return alert(`${input.name} 값을 입력하세요`)
-        }
-        form.submit();
-    })
-</script>
 </html>

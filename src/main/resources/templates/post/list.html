@@ -5,46 +5,33 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" th:href="@{/css/post/list.css}">
-    <title>게시판 리스트 페이지</title>
+    <title>글 목록</title>
     <style>
         th, td {
-            border: solid 1px black;
+            border : 1px black solid;
         }
     </style>
+
 </head>
 <body>
     <button onclick="window.location.href='/post/write'">글 작성하기</button>
     <button onclick="window.location.href='/member/logout'">로그아웃</button>
     <button onclick="window.location.href='/member/withdraw'">회원탈퇴</button>
-    <th:block th:if="${posts != null and #lists.size(posts) != 0}"> <!-- if문이 true 일때 -->
-        <table>
-            <tr>
-                <th>제목</th>
-                <th>내용</th>
+    <table>
+        <tr>
+            <th>제목</th>
+            <th>내용</th>
+        </tr>
+        <th:block th:each="post : ${posts}">
+            <tr th:object="${post}">
+                <td>
+                    <a th:href="@{/post/read(id=${post.id})}">
+                        <span th:text="*{postTitle}"></span>
+                    </a>
+                </td>
+                <td th:text="*{postContent}"></td>
             </tr>
-            <th:block th:each="post : ${posts}">
-                <tr th:object="${post}">
-                    <td>
-                        <a th:href="@{/post/read(id=${post.id})}">
-                            <span th:text="*{postTitle}"></span>
-                        </a>
-                    </td>
-                    <td th:text="*{postContent}"></td>
-                </tr>
-            </th:block>
-        </table>
-    </th:block>
-    <th:block th:unless="${posts != null and #lists.size(posts) != 0}"> <!-- if문이 false 일때 -->
-        <h1>게시글이 없습니다</h1>
-    </th:block>
+        </th:block>
+    </table>
 </body>
-<script th:inline="javascript">
-    // const member = [[${session.member}]]
-    // const product = [[${session.product}]]
-    // console.log(member)
-    // console.log(product)
-
-    const posts = [[${request.posts}]]
-</script>
 </html>

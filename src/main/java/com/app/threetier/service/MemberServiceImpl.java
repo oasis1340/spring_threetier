@@ -2,38 +2,34 @@ package com.app.threetier.service;
 
 import com.app.threetier.domain.MemberVO;
 import com.app.threetier.repository.MemberDAO;
-import com.app.threetier.repository.PostDAO;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(rollbackFor = Exception.class)
+@Transactional
 public class MemberServiceImpl implements MemberService {
 
     private final MemberDAO memberDAO;
-    private final PostDAO postDAO;
+    private final HttpSession session;
 
     @Override
     public void join(MemberVO memberVO) {
-        memberDAO.save(memberVO);
+        memberDAO.join(memberVO);
     }
 
     @Override
     public Optional<MemberVO> login(MemberVO memberVO) {
-        return memberDAO.findByMemberIdAndMemberPassword(memberVO);
+         return memberDAO.login(memberVO);
     }
 
     @Override
-//    @Transactional(rollbackFor = Exception.class)
-//    @Transactional(rollbackFor = {IOException.class, RuntimeException.class})
-    public void withdraw(Long id) {
-//        게시글도 모두 삭제
-        postDAO.deleteAllByMemberId(id);
+    public void delete(Long id) {
         memberDAO.delete(id);
     }
 }

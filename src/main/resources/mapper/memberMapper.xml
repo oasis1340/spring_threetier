@@ -3,7 +3,7 @@
 <mapper namespace="com.app.threetier.mapper.MemberMapper">
     <insert id="insert" parameterType="MemberVO">
         INSERT INTO TBL_MEMBER
-        VALUES (SEQ_MEMBER.NEXTVAL, #{memberEmail}, #{memberPassword}, #{memberName})
+        VALUES(SEQ_MEMBER.NEXTVAL, #{memberEmail}, #{memberPassword}, #{memberName})
     </insert>
 
     <select id="select" parameterType="MemberVO" resultType="MemberVO">
@@ -13,8 +13,8 @@
     </select>
 
     <delete id="delete" parameterType="Long">
-        DELETE FROM TBL_MEMBER
+        DELETE
+        FROM TBL_MEMBER
         WHERE ID = #{id}
     </delete>
-
 </mapper>

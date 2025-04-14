@@ -5,7 +5,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>상세보기</title>
+    <title>Document</title>
 </head>
 <body>
     <table th:object="${post}">
@@ -18,11 +18,9 @@
             <td th:text="*{postContent}"></td>
         </tr>
     </table>
+
     <a th:href="@{/post/list}">목록으로</a>
     <a th:href="@{/post/edit(id=${post.id})}">수정</a>
-    <a th:href="@{/post/delete(id=${post.id})}">삭제</a>
+    <a th:href="@{/post/remove(id=${post.id})}">삭제</a>
 </body>
-<script th:inline="javascript">
-    console.log([[${post}]])
-</script>
 </html>

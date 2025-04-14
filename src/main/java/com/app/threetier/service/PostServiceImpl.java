@@ -11,40 +11,31 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class PostServiceImpl implements PostService {
+
     private final PostDAO postDAO;
 
-//    게시글 작성
     @Override
-    public void save(PostVO postVO) {
+    public List<PostVO> postList() {
+        return postDAO.postList();
+    }
+
+    @Override
+    public void insert(PostVO postVO) {
         postDAO.insert(postVO);
     }
-//    게시글 전체 조회
+
     @Override
-    public List<PostVO> getList() {
-        return postDAO.findAll();
+    public Optional<PostVO> select(Long id) {
+        return postDAO.select(id);
     }
 
-//    게시글 수정
     @Override
     public void edit(PostVO postVO) {
-        postDAO.editById(postVO);
-    }
-
-//    게시글 삭제
-    @Override
-    public void deletePost(Long id) {
-        postDAO.deleteById(id);
-    }
-
-    //     회원 게시글 전체 삭제
-    @Override
-    public void deleteAll(Long memberId) {
-        postDAO.deleteAllByMemberId(memberId);
+        postDAO.edit(postVO);
     }
 
     @Override
-    public Optional<PostVO> getPostById(Long id) {
-        return postDAO.findById(id);
+    public void remove(Long id) {
+        postDAO.delete(id);
     }
-
 }

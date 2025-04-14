@@ -12,6 +12,7 @@ public interface MemberMapper {
 
 //    로그인
     public Optional<MemberVO> select(MemberVO memberVO);
-//    회원 탈퇴
+
+//    회원탈퇴
     public void delete(Long id);
 }

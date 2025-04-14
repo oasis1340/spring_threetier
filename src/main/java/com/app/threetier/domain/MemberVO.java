@@ -3,11 +3,9 @@ package com.app.threetier.domain;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
-import java.io.Serializable;
-
 @Component
 @Data
-public class MemberVO implements Serializable {
+public class MemberVO {
     private Long id;
     private String memberEmail;
     private String memberPassword;

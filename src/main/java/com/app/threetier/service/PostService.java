@@ -6,15 +6,13 @@ import java.util.List;
 import java.util.Optional;
 
 public interface PostService {
-    public List<PostVO> getList();
+    public List<PostVO> postList();
 
-    public void save(PostVO postVO);
+    public void insert(PostVO postVO);
 
-    public void deleteAll(Long memberId);
+    public Optional<PostVO> select(Long id);
 
     public void edit(PostVO postVO);
 
-    public void deletePost(Long id);
-
-    public Optional<PostVO> getPostById(Long id);
+    public void remove(Long id);
 }

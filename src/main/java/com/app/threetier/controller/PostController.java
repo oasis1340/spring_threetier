@@ -2,9 +2,9 @@ package com.app.threetier.controller;
 
 import com.app.threetier.domain.MemberVO;
 import com.app.threetier.domain.PostVO;
+import com.app.threetier.service.MemberService;
 import com.app.threetier.service.PostService;
 import jakarta.servlet.http.HttpSession;
-import jakarta.websocket.Session;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.util.List;
+
 @Controller
-@Slf4j
 @RequestMapping("/post/*")
+@Slf4j
 @RequiredArgsConstructor
 public class PostController {
 
@@ -26,14 +28,7 @@ public class PostController {
 
     @GetMapping("list")
     public void goToList(Model model) {
-        model.addAttribute("posts", postService.getList());
-    }
-
-    @GetMapping("read")
-    public void goToRead(@RequestParam("id") Long id, Model model) {
-        model.addAttribute("post", postService.getPostById(id).orElseThrow(() -> {
-            throw new RuntimeException("Post Not Found");
-        }));
+        model.addAttribute("posts", postService.postList());
     }
 
     @GetMapping("write")
@@ -43,29 +38,40 @@ public class PostController {
     }
 
     @PostMapping("write")
-    public RedirectView post(PostVO postVO) {
-        postService.save(postVO);
+    public RedirectView write (PostVO postVO) {
+        postService.insert(postVO);
         return new RedirectView("/post/list");
     }
 
+    @GetMapping("read")
+    public void goToRead(Model model, @RequestParam("id") Long id) {
+        model.addAttribute("post", postService.select(id).orElseThrow(() -> {
+            throw new RuntimeException("Post Not Found");
+        }));
+    }
+
     @GetMapping("edit")
-    public void goToEdit(@RequestParam("id") Long id, Model model) {
+    public void goToEdit(Model model, @RequestParam("id") Long id) {
+        PostVO postVO = postService.select(id).orElseThrow(()->{
+            throw new RuntimeException("Post Not Found");
+        });
+
         Long memberId = ((MemberVO)session.getAttribute("member")).getId();
-        PostVO postVO = postService.getPostById(id).orElseThrow(() -> new RuntimeException("PostVO Not Found"));
-        model.addAttribute("postVO", postVO);
+
         model.addAttribute("memberId", memberId);
+        model.addAttribute("postVO", postVO);
     }
 
     @PostMapping("edit")
-    public RedirectView edit(PostVO postVO) {
-        log.info("{}", postVO.toString());
+    public RedirectView edit (PostVO postVO) {
         postService.edit(postVO);
         return new RedirectView("/post/list");
     }
 
-    @GetMapping("delete")
-    public RedirectView delete(Long id) {
-        postService.deletePost(id);
+    @GetMapping("remove")
+    public RedirectView remove(Long id) {
+        postService.remove(id);
         return new RedirectView("/post/list");
     }
+
 }

@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>이름</th>
+            <th>국어</th>
+            <th>영어</th>
+            <th>수학</th>
+            <th>총점</th>
+        </tr>
+        <th:block th:each="task : ${tasks}">
+            <tr th:object="${task}">
+                <td th:text="*{name}"></td>
+                <td th:text="*{kor}"></td>
+                <td th:text="*{eng}"></td>
+                <td th:text="*{math}"></td>
+                <td th:text="*{total}"></td>
+                <td th:text="*{average}"></td>
+            </tr>
+        </th:block>
+    </table>
+</body>
+</html>
